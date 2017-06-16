@@ -22,8 +22,6 @@ configure(allprojects) { project ->
   repositories { mavenLocal(); mavenCentral(); jcenter() }
 
   dependencies {
-    // compile "io.vertx:vertx-core:$vertxVersion",
-    //         "io.vertx:vertx-hazelcast:$vertxVersion"
     ["core", "hazelcast"].each { module ->
       compile "io.vertx:vertx-$module:$vertxVersion"
     }

@@ -1,0 +1,30 @@
+configure(allprojects) { project ->
+
+  ext { vertxVersion = "3.3.2" }
+
+  apply plugin: "java"
+
+  group "daggerok"
+  version "0.0.1"
+
+  jar {
+    exclude "META-INF/*.MF", "META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA"
+    from {
+      configurations.compile.collect { file ->
+        file.isDirectory() ? file : zipTree(file)
+      }
+    }
+  }
+
+  repositories { mavenLocal(); mavenCentral() }
+
+  dependencies {
+    // compile "io.vertx:vertx-core:$vertxVersion",
+    //         "io.vertx:vertx-hazelcast:$vertxVersion"
+    ["core", "hazelcast"].each { module ->
+      compile "io.vertx:vertx-$module:$vertxVersion"
+    }
+    testCompile "io.vertx:vertx-unit:$vertxVersion",
+                "junit:junit:4+"
+  }
+}

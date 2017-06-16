@@ -1,0 +1,11 @@
+= scalable-vertx-app image:https://travis-ci.org/daggerok/scalable-vertx-app.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/scalable-vertx-app"]
+
+==== scalable app using vertx
+
+im progress...
+
+==== stack:
+
+- vertx (core, hazelcast)
+- gradle
+- mongodb

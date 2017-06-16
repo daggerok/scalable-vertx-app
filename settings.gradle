@@ -1,4 +1,5 @@
 rootProject.name = "scalable-vertx-app"
+include "data-service:docker:mongo"
 include "data-service"
 include "publisher-service"
 include "web-frontend-service"

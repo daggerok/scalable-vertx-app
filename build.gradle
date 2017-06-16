@@ -1,6 +1,9 @@
 configure(allprojects) { project ->
 
-  ext { vertxVersion = "3.3.2" }
+  ext {
+    vertxVersion = "3.4.1"
+    loggerVersion = "1.7.25"
+  }
 
   apply plugin: "java"
 
@@ -16,7 +19,7 @@ configure(allprojects) { project ->
     }
   }
 
-  repositories { mavenLocal(); mavenCentral() }
+  repositories { mavenLocal(); mavenCentral(); jcenter() }
 
   dependencies {
     // compile "io.vertx:vertx-core:$vertxVersion",
@@ -24,6 +27,9 @@ configure(allprojects) { project ->
     ["core", "hazelcast"].each { module ->
       compile "io.vertx:vertx-$module:$vertxVersion"
     }
+    compile "org.slf4j:slf4j-api:$loggerVersion",
+            "org.slf4j:slf4j-log4j12:$loggerVersion"
+    compileOnly "org.projectlombok:lombok:1.16.16"
     testCompile "io.vertx:vertx-unit:$vertxVersion",
                 "junit:junit:4+"
   }

@@ -1,0 +1,10 @@
+dependencies {
+  compile "io.vertx:vertx-mongo-client:$vertxVersion"
+}
+
+jar {
+  manifest {
+    attributes "Main-Class": "io.vertx.core.Launcher"
+    attributes "Main-Verticle": "daggerok.DataService"
+  }
+}

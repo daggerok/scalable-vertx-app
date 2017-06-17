@@ -6,7 +6,7 @@ plugins {
 def root = rootDir.absolutePath.replaceAll("\\\\", '/')
 
 dockerCompose {
-    useComposeFiles = ["$root/data-service/docker/mongo/src/docker-compose.yml"]
+    useComposeFiles = ["$root/data-service/docker/app/src/docker-compose.yml"]
     captureContainersOutput = true
     stopContainers = true
     removeContainers = true
@@ -15,5 +15,7 @@ dockerCompose {
     projectName = "$rootProject.name"
 }
 
-task mongoUp(dependsOn: composeUp)
-task mongoDown{ finalizedBy composeDown }
+task dataServiceUp(dependsOn: [":data-service:build", composeUp])
+task dataServiceDown {
+    finalizedBy composeDown
+}

@@ -69,7 +69,7 @@ public class DataService extends AbstractVerticle {
       });
     });
 
-    log.info("app started.");
+    log.info("app started: {}", props);
   }
 
   @Override

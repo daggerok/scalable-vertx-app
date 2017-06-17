@@ -14,9 +14,12 @@ before_install:
   # kill whatever punning on pg port
   - true | sudo kill $(sudo lsof -t -i:5432)
 script:
-  - gradle composeUp
+  - gradle mongoUp
   - gradle clean build
-  - gradle composeDown
+  - gradle mongoDown
+  - gradle dataServiceUp
+  - echo "up and running"
+  - gradle dataServiceDown
 after_script:
   - gradle --stop
 before_cache:

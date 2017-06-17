@@ -1,0 +1,11 @@
+dependencies {
+  compile project(":modules:env"),
+      project(":modules:log")
+}
+
+jar {
+  manifest {
+    attributes "Main-Class": "io.vertx.core.Launcher"
+    attributes "Main-Verticle": "daggerok.PublisherService"
+  }
+}

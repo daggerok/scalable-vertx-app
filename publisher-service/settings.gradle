@@ -1,4 +1,4 @@
-rootProject.name = "data-service"
+rootProject.name = "publisher-service"
 
 file("$project.parent.path/modules").listFiles().each { File build ->
   includeBuild build

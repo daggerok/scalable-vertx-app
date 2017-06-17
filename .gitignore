@@ -3,6 +3,7 @@
 .vertx/
 build/
 gradle/
+localrepo/
 .DS_Store
 *.iml
 *.ipr

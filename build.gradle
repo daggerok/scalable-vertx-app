@@ -1,3 +1,9 @@
+plugins {
+  id "idea"
+}
+
+def root = rootDir.absoluteFile.path
+
 configure(allprojects) { project ->
 
   ext {
@@ -6,6 +12,8 @@ configure(allprojects) { project ->
   }
 
   apply plugin: "java"
+  //apply plugin: "maven"
+  apply plugin: "maven-publish"
 
   group "daggerok"
   version "0.0.1"
@@ -19,16 +27,38 @@ configure(allprojects) { project ->
     }
   }
 
-  repositories { mavenLocal(); mavenCentral(); jcenter() }
+  sourceCompatibility = JavaVersion.VERSION_1_8
+
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+  }
+
+  publishing {
+    publications {
+      mavenJava(MavenPublication) {
+        from components.java
+      }
+    }
+  }
+
+  publishing {
+    repositories {
+      maven {
+        url "$root/localrepo"
+      }
+    }
+  }
 
   dependencies {
     ["core", "hazelcast"].each { module ->
       compile "io.vertx:vertx-$module:$vertxVersion"
     }
     compile "org.slf4j:slf4j-api:$loggerVersion",
-            "org.slf4j:slf4j-log4j12:$loggerVersion"
+        "org.slf4j:slf4j-log4j12:$loggerVersion"
     compileOnly "org.projectlombok:lombok:1.16.16"
     testCompile "io.vertx:vertx-unit:$vertxVersion",
-                "junit:junit:4+"
+        "junit:junit:4+"
   }
 }

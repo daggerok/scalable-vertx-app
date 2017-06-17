@@ -8,33 +8,12 @@ import io.vertx.ext.mongo.MongoClient;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import static daggerok.Env.host;
+import static daggerok.Env.port;
 import static java.lang.String.format;
-import static java.util.Objects.isNull;
 
 @Slf4j
 public class DataService extends AbstractVerticle {
-
-  static final String DB_HOST = "DB_HOST";
-  static final String DB_PORT = "DB_PORT";
-  static final Map<String, String> props = new HashMap<>();
-
-  static {
-    val envHost = System.getenv(DB_HOST);
-    props.put(DB_HOST, isNull(envHost) || envHost.isEmpty() ? "localhost" : envHost);
-    val envPort = System.getenv(DB_PORT);
-    props.put(DB_PORT, isNull(envPort) || envPort.isEmpty() ? "27017" : envPort);
-  }
-
-  static String host() {
-    return props.get(DB_HOST);
-  }
-
-  static String port() {
-    return props.get(DB_PORT);
-  }
 
   @Override
   public void start() throws Exception {
@@ -69,7 +48,7 @@ public class DataService extends AbstractVerticle {
       });
     });
 
-    log.info("app started: {}", props);
+    log.info("app started: {}", Env.getProps());
   }
 
   @Override

@@ -1,19 +1,19 @@
 plugins {
-    id "com.avast.gradle.docker-compose" version "0.4.3"
+  id "com.avast.gradle.docker-compose" version "0.4.3"
 }
 
 // fucking windows paths... replace all: '\\' -> '/'
 def root = rootDir.absolutePath.replaceAll("\\\\", '/')
 
 dockerCompose {
-    useComposeFiles = ["$root/data-service/docker/mongo/src/docker-compose.yml"]
-    captureContainersOutput = true
-    stopContainers = true
-    removeContainers = true
-    removeImages = "Local"
-    removeVolumes = true
-    projectName = "$rootProject.name"
+  useComposeFiles = ["$root/data-service/docker/mongo/src/docker-compose.yml"]
+  captureContainersOutput = true
+  stopContainers = true
+  removeContainers = true
+  removeImages = "Local"
+  removeVolumes = true
+  projectName = "$rootProject.name"
 }
 
 task mongoUp(dependsOn: composeUp)
-task mongoDown{ finalizedBy composeDown }
+task mongoDown { finalizedBy composeDown }

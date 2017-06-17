@@ -1,4 +1,6 @@
 dependencies {
+  compile project(":modules:env"),
+      project(":modules:log")
   compile "io.vertx:vertx-mongo-client:$vertxVersion"
 }
 

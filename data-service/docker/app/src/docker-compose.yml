@@ -12,7 +12,7 @@ services:
       DB_PORT: 27017
     image: openjdk:8u131-jre-alpine
     volumes:
-      - ../../../build/libs/data-service-0.0.1.jar:/var/data-service.jar
+      - ../../../build/libs/data-service-0.0.1.jar:/var/data-service.jar:Z
       - data-service-data:/var
     command: java -jar /var/data-service.jar -cluster
     depends_on: [data-service-mongo]

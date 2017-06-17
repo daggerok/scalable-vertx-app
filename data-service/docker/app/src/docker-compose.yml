@@ -1,23 +1,25 @@
 version: "2.1"
 services:
-  data-service-mongo:
+  mongo:
     image: healthcheck/mongo:latest
-    networks: [vertx-backing-services]
-    volumes: ["data-service-mongo-data:/data/db"]
+    volumes: ["mongo-data:/data/db"]
     ports: ["27017:27017"]
-    container_name: db
+    networks: [vertx-backing-services]
   elasticsearch:
     image: elasticsearch
     command: elasticsearch -Des.network.host=0.0.0.0
     ports:
       - 9200:9200
       - 9300:9300
+    networks: [vertx-backing-services]
   logstash:
     image: logstash
-    command: -e 'input { gelf { host => "0.0.0.0" poer => 12201 } }
+    command: -e 'input { gelf { host => "0.0.0.0" port => 12201 } }
               output { elasticsearch { hosts => ["elasticsearch"] } }'
     depends_on: [elasticsearch]
+    links: [elasticsearch]
     ports: ["12201:12201/udp"]
+    networks: [vertx-backing-services]
   kibana:
     image: kibana
     ports: ["5601:5601"]
@@ -26,9 +28,13 @@ services:
     depends_on:
       - elasticsearch
       - logstash
+    links:
+      - elasticsearch
+      - logstash
+    networks: [vertx-backing-services]
   data-service:
     environment:
-      DB_HOST: db
+      DB_HOST: mongo
       DB_PORT: 27017
     image: openjdk:8u131-jre-alpine
     volumes:
@@ -36,11 +42,14 @@ services:
       - data-service-data:/var
     command: java -jar /var/data-service.jar -cluster
     depends_on:
-      - data-service-mongo
+      - mongo
+      - logstash
+    links:
+      - mongo
       - logstash
     networks: [vertx-backing-services]
 volumes:
-  data-service-mongo-data: {}
+  mongo-data: {}
   data-service-data: {}
 networks:
   vertx-backing-services:

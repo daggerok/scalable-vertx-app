@@ -2,20 +2,20 @@ version: "2.1"
 services:
   data-service-mongo:
     image: healthcheck/mongo:latest
-    ports: ["27017:27017"]
     networks: [vertx-backing-services]
     volumes: ["data-service-mongo-data:/data/db"]
+    ports: ["27017:27017"]
+    container_name: db
   data-service:
+    environment:
+      DB_HOST: db
+      DB_PORT: 27017
     image: openjdk:8u131-jre-alpine
     volumes:
       - ../../../build/libs/data-service-0.0.1.jar:/var/data-service.jar
       - data-service-data:/var
-    command: java -jar /var/data-service.jar
-    links: ["data-service-mongo:db"]
+    command: java -jar /var/data-service.jar -cluster
     depends_on: [data-service-mongo]
-    environment:
-      DB_HOST: db
-      DB_PORT: 27017
     networks: [vertx-backing-services]
 volumes:
   data-service-mongo-data: {}

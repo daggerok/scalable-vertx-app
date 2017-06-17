@@ -14,9 +14,10 @@ import static lombok.AccessLevel.PRIVATE;
 public class Env {
 
   @Getter
-  static final Map<String, String> props = new HashMap<>();
-  static final String DB_HOST = "DB_HOST";
-  static final String DB_PORT = "DB_PORT";
+  private static final Map<String, String> props = new HashMap<>();
+
+  private static final String DB_HOST = "DB_HOST";
+  private static final String DB_PORT = "DB_PORT";
 
   static {
     val envHost = System.getenv(DB_HOST);
@@ -25,11 +26,9 @@ public class Env {
     props.put(DB_PORT, isNull(envPort) || envPort.isEmpty() ? "27017" : envPort);
   }
 
-  public static String host() {
-    return props.get(DB_HOST);
-  }
+  @Getter
+  private static final String host = props.get(DB_HOST);
 
-  public static String port() {
-    return props.get(DB_PORT);
-  }
+  @Getter
+  private static final String port = props.get(DB_PORT);
 }

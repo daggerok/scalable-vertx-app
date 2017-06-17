@@ -8,8 +8,7 @@ import io.vertx.ext.mongo.MongoClient;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
-import static daggerok.Env.host;
-import static daggerok.Env.port;
+import static daggerok.Env.*;
 import static java.lang.String.format;
 
 @Slf4j
@@ -18,7 +17,7 @@ public class DataService extends AbstractVerticle {
   @Override
   public void start() throws Exception {
 
-    val cs = format("mongodb://%s:%s", host(), port());
+    val cs = format("mongodb://%s:%s", getHost(), getPort());
     val eb = vertx.eventBus();
     val mc = MongoClient.createShared(
         vertx,

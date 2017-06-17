@@ -56,7 +56,8 @@ configure(allprojects) { project ->
       compile "io.vertx:vertx-$suffix:$vertxVersion"
     }
     compile "org.slf4j:slf4j-api:$loggerVersion",
-        "org.slf4j:slf4j-log4j12:$loggerVersion"
+        "org.slf4j:slf4j-log4j12:$loggerVersion",
+        "biz.paluch.logging:logstash-gelf:1.10.0"
     compileOnly "org.projectlombok:lombok:1.16.16"
     testCompile "io.vertx:vertx-unit:$vertxVersion",
         "junit:junit:4+"

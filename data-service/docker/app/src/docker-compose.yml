@@ -6,6 +6,26 @@ services:
     volumes: ["data-service-mongo-data:/data/db"]
     ports: ["27017:27017"]
     container_name: db
+  elasticsearch:
+    image: elasticsearch
+    command: elasticsearch -Des.network.host=0.0.0.0
+    ports:
+      - 9200:9200
+      - 9300:9300
+  logstash:
+    image: logstash
+    command: -e 'input { gelf { host => "0.0.0.0" poer => 12201 } }
+              output { elasticsearch { hosts => ["elasticsearch"] } }'
+    depends_on: [elasticsearch]
+    ports: ["12201:12201/udp"]
+  kibana:
+    image: kibana
+    ports: ["5601:5601"]
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+      - logstash
   data-service:
     environment:
       DB_HOST: db
@@ -15,7 +35,9 @@ services:
       - ../../../build/libs/data-service-0.0.1.jar:/var/data-service.jar:Z
       - data-service-data:/var
     command: java -jar /var/data-service.jar -cluster
-    depends_on: [data-service-mongo]
+    depends_on:
+      - data-service-mongo
+      - logstash
     networks: [vertx-backing-services]
 volumes:
   data-service-mongo-data: {}

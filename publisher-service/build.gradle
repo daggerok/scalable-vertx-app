@@ -1,6 +1,6 @@
 dependencies {
-  compile project(":modules:env"),
-      project(":modules:log")
+  compile project(":modules:env"), project(":modules:log"),
+      "io.vertx:vertx-web:$vertxVersion"
 }
 
 jar {

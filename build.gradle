@@ -12,7 +12,7 @@ configure(allprojects) { project ->
   }
 
   apply plugin: "java"
-  //apply plugin: "maven"
+  apply plugin: "maven"
   apply plugin: "maven-publish"
 
   group "daggerok"
@@ -52,8 +52,8 @@ configure(allprojects) { project ->
   }
 
   dependencies {
-    ["core", "hazelcast"].each { module ->
-      compile "io.vertx:vertx-$module:$vertxVersion"
+    ["core", "hazelcast"].each { suffix ->
+      compile "io.vertx:vertx-$suffix:$vertxVersion"
     }
     compile "org.slf4j:slf4j-api:$loggerVersion",
         "org.slf4j:slf4j-log4j12:$loggerVersion"

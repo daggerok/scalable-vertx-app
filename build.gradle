@@ -62,6 +62,6 @@ configure(allprojects) { project ->
         "biz.paluch.logging:logstash-gelf:1.10.0"
     compileOnly "org.projectlombok:lombok:1.16.16"
     testCompile "io.vertx:vertx-unit:$vertxVersion",
-        "junit:junit:4+"
+        "junit:junit:4.12"
   }
 }

@@ -18,9 +18,10 @@ script:
   - sleep 60
   - bash gradlew
   - bash gradlew mongoDown || true
-  - bash gradlew dataServiceUp
-  - echo "up and running"
-  - bash gradlew dataServiceDown
+#  - bash gradlew dataServiceUp &
+#  - sleep 60
+#  - echo "up and running"
+#  - bash gradlew dataServiceDown
 cache:
   directories:
   - $HOME/.m2

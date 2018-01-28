@@ -1,5 +1,5 @@
 plugins {
-  id "com.avast.gradle.docker-compose" version "0.4.3"
+  id "com.avast.gradle.docker-compose" version "0.6.12"
 }
 
 // fucking windows paths... replace all: '\\' -> '/'
@@ -12,7 +12,8 @@ dockerCompose {
   removeContainers = true
   removeImages = "Local"
   removeVolumes = true
-  projectName = "$rootProject.name"
+  removeOrphans = true
+  projectName = "$project.name"
 }
 
 task dataServiceUp(dependsOn: [":data-service:build", composeUp])

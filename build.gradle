@@ -18,6 +18,8 @@ configure(allprojects) { project ->
   group "daggerok"
   version "0.0.1"
 
+  defaultTasks "clean", "build"
+
   jar {
     exclude "META-INF/*.MF", "META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA"
     from {

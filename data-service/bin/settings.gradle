@@ -1,0 +1,5 @@
+rootProject.name = "data-service"
+
+file("$project.parent.path/modules").listFiles().each { File build ->
+  includeBuild build
+}
